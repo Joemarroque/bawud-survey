@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bawud Cafe Survey</title> <style>
+        :root { 
+            --primary: #4e342e;
+            --accent: #d4a373;
+            --bg: #fefae0;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
+        .survey-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; border-top: 8px solid var(--accent); }
+        h2 { color: var(--primary); text-align: center; margin-bottom: 5px; }
+        p { text-align: center; color: #6d6d6d; margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #3e2723; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #d7ccc8; border-radius: 8px; box-sizing: border-box; font-size: 16px; background-color: #fffaf0; }
+        button { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        button:hover { background: #3e2723; transform: translateY(-1px); }
+        #status { margin-top: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="survey-container">
+    <h2>Bawud Cafe</h2> <p>How was your coffee & stay?</p>
+    
+    <form id="surveyForm">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="custName" placeholder="Who are we thanking today?" required>
+        </div>
+
+        <div class="form-group">
+            <label>Experience Rating</label>
+            <select id="foodRating">
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="1">⭐ Poor</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Any suggestions?</label>
+            <textarea id="comments" rows="3" placeholder="How can we make your next visit better?"></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Feedback</button>
+    </form>
+    <div id="status"></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBZZd3uQ3oXhupTLdZ8Ou03spMrVZh2iWk",
+    authDomain: "bawud-restobar-survey-form.firebaseapp.com",
+    projectId: "bawud-restobar-survey-form",
+    storageBucket: "bawud-restobar-survey-form.firebasestorage.app",
+    messagingSenderId: "627201409239",
+    appId: "1:627201409239:web:68330125fbf216959db092",
+    measurementId: "G-7X9K54P0TH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById('surveyForm');
+  const status = document.getElementById('status');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    
+    btn.disabled = true;
+    status.innerText = "Sending to Bawud Cafe...";
+
+    try {
+      await addDoc(collection(db, "customer_feedback"), {
+        customer: document.getElementById('custName').value,
+        rating: document.getElementById('foodRating').value,
+        comments: document.getElementById('comments').value,
+        submittedAt: new Date().toLocaleString()
+      });
+      
+      status.style.color = "#2e7d32";
+      status.innerText = "Salamat! Feedback received. ✅";
+      form.reset();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      status.style.color = "#c62828";
+      status.innerText = "Error. Check your connection or Rules.";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
