@@ -33,7 +33,37 @@
         </div>
 
         <div class="form-group">
-            <label>Experience Rating</label>
+            <label> Service (Staff Friendliness)</label>
+            <select id="serviceRating">
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="1">⭐ Poor</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label> Waiting time</label>
+            <select id="waitingTime">
+                <option value="5">⭐⭐⭐⭐⭐ Just Right/ Fast</option>
+                <option value="4">⭐⭐⭐⭐ Reasonable</option>
+                <option value="3">⭐⭐⭐ A bit of a wait</option>
+                <option value="1">⭐ Too slow</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label> Food/Drink presentation</label>
+            <select id="presentation">
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="1">⭐ Poor</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Overall Experience Rating</label>
             <select id="foodRating">
                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
                 <option value="4">⭐⭐⭐⭐ Good</option>
@@ -43,10 +73,22 @@
         </div>
 
         <div class="form-group">
+            <label>Would you tell your friends to visit Bawud Cafe?</label>
+            <select id="recommendRating">
+                <option value="10">10 - Definitely! 😎</option>
+                <option value="9">9</option>
+                <option value="8">8 - Highly Likely</option>
+                <option value="7">7</option>
+                <option value="5">5 - Maybe</option>
+                <option value="1">1 - Not Really</option>
+            </select>
+        </div>
+
+        <div class="form-group">
             <label>Any suggestions?</label>
             <textarea id="comments" rows="3" placeholder="How can we make your next visit better?"></textarea>
         </div>
-
+        
         <button type="submit" id="submitBtn">Submit Feedback</button>
     </form>
     <div id="status"></div>
@@ -74,13 +116,17 @@
     try {
       await addDoc(collection(db, "customer_feedback"), {
         customer: document.getElementById('custName').value,
-        rating: document.getElementById('foodRating').value,
+        overallRating: document.getElementById('foodRating').value,
+        serviceRating: document.getElementById('serviceRating').value,
+        waitingTime: document.getElementById('waitingTime').value,
+        presentation: document.getElementById('presentation').value,
+        recommendRating: document.getElementById('recommendRating').value,
         comments: document.getElementById('comments').value,
         submittedAt: new Date().toLocaleString()
       });
       
       status.style.color = "#2e7d32";
-      status.innerText = "Salamat! Feedback received. ✅";
+      status.innerText = "Salamat Karajaw! Feedback received. ✅";
       form.reset();
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -95,3 +141,4 @@
 </body>
 
 </html>
+
