@@ -3,21 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bawud Cafe Survey</title> <style>
+    <title>Bawud Cafe Survey</title> 
+    <style>
         :root { 
             --primary: #4e342e;
             --accent: #d4a373;
             --bg: #fefae0;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
-        .survey-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; border-top: 8px solid var(--accent); }
+
+        body { 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: './bawudwave.jpg';
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px); 
+            transform: scale(1.1);
+            z-index: -1;
+        }
+
+        .survey-container { 
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+            width: 90%; 
+            max-width: 450px; 
+            border-top: 8px solid var(--accent); 
+            margin: 40px 0;
+        }
+
         h2 { color: var(--primary); text-align: center; margin-bottom: 5px; }
-        p { text-align: center; color: #6d6d6d; margin-bottom: 25px; }
+        p { text-align: center; color: #5d4037; margin-bottom: 25px; font-style: italic; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: 600; color: #3e2723; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #d7ccc8; border-radius: 8px; box-sizing: border-box; font-size: 16px; background-color: #fffaf0; }
-        button { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        button:hover { background: #3e2723; transform: translateY(-1px); }
+        input, select, textarea { 
+            width: 100%; padding: 12px; border: 1px solid #d7ccc8; border-radius: 8px; 
+            box-sizing: border-box; font-size: 16px; background-color: rgba(255, 251, 240, 0.8); 
+        }
+        button { 
+            width: 100%; background: var(--primary); color: white; border: none; 
+            padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; 
+            cursor: pointer; margin-top: 10px; transition: 0.3s; 
+        }
+        button:hover { background: #3e2723; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
     </style>
 </head>
@@ -33,7 +78,7 @@
         </div>
 
         <div class="form-group">
-            <label> Service (Staff Friendliness)</label>
+            <label>Service (Staff Friendliness)</label>
             <select id="serviceRating">
                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
                 <option value="4">⭐⭐⭐⭐ Good</option>
@@ -43,9 +88,9 @@
         </div>
 
         <div class="form-group">
-            <label> Waiting time</label>
+            <label>Waiting time</label>
             <select id="waitingTime">
-                <option value="5">⭐⭐⭐⭐⭐ Just Right/ Fast</option>
+                <option value="5">⭐⭐⭐⭐⭐ Just Right / Fast</option>
                 <option value="4">⭐⭐⭐⭐ Reasonable</option>
                 <option value="3">⭐⭐⭐ A bit of a wait</option>
                 <option value="1">⭐ Too slow</option>
@@ -53,7 +98,7 @@
         </div>
 
         <div class="form-group">
-            <label> Food/Drink presentation</label>
+            <label>Food/Drink presentation</label>
             <select id="presentation">
                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
                 <option value="4">⭐⭐⭐⭐ Good</option>
@@ -139,6 +184,4 @@
 </script>
 
 </body>
-
 </html>
-
