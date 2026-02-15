@@ -152,7 +152,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
   import { firebaseConfig } from './firebase-config.js';
 
@@ -170,23 +170,29 @@
     status.innerText = "Sending to Bawud Cafe...";
 
     try {
-      await addDoc(collection(db, "customer_feedback"), {
-        customer: document.getElementById('custName').value,
-        customeraddress: document.getElementById('custAddress').value,
-        overallRating: document.getElementById('foodRating').value,
-        serviceRating: document.getElementById('serviceRating').value,
-        waitingTime: document.getElementById('waitingTime').value,
-        presentation: document.getElementById('presentation').value,
-        recommendRating: document.getElementById('recommendRating').value,
-        comments: document.getElementById('comments').value,
-        submittedAt: new Date().toLocaleString()
-      });
+        const customerName = document.getElementById('custName').value;
+        const now = new Date();
+        
+        const timestamp = now.toISOString().replace(/[-T:]/g, '').split('.')[0];
+        const customID = `${timestamp}-${customerName.replace(/\s+/g, '-')}`;
+    
+        await setDoc(doc(db, "customer_feedback", customID), {
+            customer: customerName,
+            customerAddress: document.getElementById('custAddress').value,
+            overallRating: document.getElementById('foodRating').value,
+            serviceRating: document.getElementById('serviceRating').value,
+            waitingTime: document.getElementById('waitingTime').value,
+            presentation: document.getElementById('presentation').value,
+            recommendRating: document.getElementById('recommendRating').value,
+            comments: document.getElementById('comments').value,
+            submittedAt: now.toLocaleString()
+        });
       
       status.style.color = "#2e7d32";
       status.innerText = "Salamat Karajaw! Feedback received. ✅";
       form.reset();
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error("Error saving feedback: ", error);
       status.style.color = "#c62828";
       status.innerText = "Error. Check your connection or Rules.";
     } finally {
@@ -194,11 +200,3 @@
     }
   });
 </script>
-
-</body>
-</html>
-
-
-
-
-
