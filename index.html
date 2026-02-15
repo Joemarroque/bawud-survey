@@ -78,6 +78,17 @@
         </div>
 
         <div class="form-group">
+            <label>Where are you from?</label>
+            <input list="countries" id="custAddress" placeholder="Start typing your country...">
+            <datalist id="countries">
+                <option value="Philippines">
+                <option value="Australia">
+                <option value="United States">
+                <option value="Germany">
+                </datalist>
+        </div>
+
+        <div class="form-group">
             <label>Service (Staff Friendliness)</label>
             <select id="serviceRating">
                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
@@ -161,6 +172,7 @@
     try {
       await addDoc(collection(db, "customer_feedback"), {
         customer: document.getElementById('custName').value,
+        customeraddress: document.getElementById('custAddress').value,
         overallRating: document.getElementById('foodRating').value,
         serviceRating: document.getElementById('serviceRating').value,
         waitingTime: document.getElementById('waitingTime').value,
@@ -185,5 +197,6 @@
 
 </body>
 </html>
+
 
 
